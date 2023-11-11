@@ -1,21 +1,22 @@
 import { fastify } from "fastify";
 import { DatabasePostgres } from "./db-postgres.js";
-import fs from "fs";
+// import fs from "fs";
 
 import "dotenv/config";
 
-const options = {
-  key: fs.readFileSync("./server.key"),
-  cert: fs.readFileSync("./server.cert"),
-};
+// const options = {
+//   key: fs.readFileSync("./server.key"),
+//   cert: fs.readFileSync("./server.cert"),
+// };
 
-const server = fastify({
-  http2: true,
-  https: options,
-});
+// const server = fastify({
+//   http2: true,
+//   https: options,
+// });
 
 // console.log(process.env);
 
+const server = fastify();
 const db = new DatabasePostgres();
 
 server.get("/", (req, res) => {
