@@ -13,7 +13,7 @@ const createTableVideos = async () => {
       console.log(`TABLE CREATED!`);
     });
   } catch (error) {
-    return new Error(error.message);
+    return error;
   }
 };
 
@@ -27,7 +27,7 @@ const deleteTable = async (name) => {
       console.log(`TABLE ${name} DELETED!`);
     });
   } catch (error) {
-    return new Error(error.message);
+    return error;
   }
 };
 
