@@ -1,7 +1,6 @@
 import { fastify } from "fastify";
 import { DatabasePostgres } from "./db-postgres.js";
 import fs from "fs";
-import https from "https";
 
 import "dotenv/config";
 
@@ -11,12 +10,17 @@ const options = {
 };
 
 const server = fastify({
+  http2: true,
   https: options,
 });
 
 // console.log(process.env);
 
 const db = new DatabasePostgres();
+
+server.get("/", (req, res) => {
+  res.code(200).send({ hello: "world" });
+});
 
 server.post("/videos", async (request, response) => {
   try {
@@ -95,18 +99,10 @@ server.listen({
   host: "0.0.0.0",
 });
 
-server.use((req, res, next) => {
-  if (req.protocol === "http") {
-    res.redirect(301, `https://${req.hostname}${req.url}`);
-  } else {
-    next();
-  }
-});
-
-// https.createServer(options, server).listen(3333, (err) => {
-//   if (err) {
-//     console.error(err);
-//     // process.exit(1);
-//   }
-//   console.log("Server HTTPS started!");
+// // server.use((req, res, next) => {
+// //   if (req.protocol === "http") {
+// //     res.redirect(301, `https://${req.hostname}${req.url}`);
+// //   } else {
+// //     next();
+// //   }
 // });
